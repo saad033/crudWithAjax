@@ -51,7 +51,7 @@
         <h4 class="modal-title">Add New Student</h4>
       </div>
 	  <div class="modal-body">
-		<form id="addStudent" name="addStudent" action="{{ route('student.store') }}" method="post">
+		<form id="addStudent" name="addStudent" action="" method="">
 			@csrf
 			<div class="form-group">
 				<label for="txtFirstName">First Name:</label>
@@ -85,9 +85,10 @@
         <h4 class="modal-title">Update Student</h4>
       </div>
 	  <div class="modal-body">
-		<form id="updateStudent" name="updateStudent" action="{{ route('student.update') }}" method="post">
+		<form id="updateStudent" name="updateStudent" action="" method="POST">
 			<input type="hidden" name="hdnStudentId" id="hdnStudentId"/>
 			@csrf
+			
 			<div class="form-group">
 				<label for="txtFirstName">First Name:</label>
 				<input type="text" class="form-control" id="txtFirstName" placeholder="Enter First Name" name="txtFirstName">
@@ -126,7 +127,7 @@
 		  var form_action = $("#addStudent").attr("action");
 		  $.ajax({
 			  data: $('#addStudent').serialize(),
-			  url: form_action,
+			  url: "{{ route('student.store') }}",
 			  type: "POST",
 			  dataType: 'json',
 			  success: function (data) {
@@ -174,8 +175,8 @@
 		  var form_action = $("#updateStudent").attr("action");
 		  $.ajax({
 			  data: $('#updateStudent').serialize(),
-			  url: form_action,
-			  type: "POST",
+			  url:"{{ route('student.update', $student->id) }}",
+			  type: "PUT",
 			  dataType: 'json',
 			  success: function (data) {
 				  var student = '<td>' + data.id + '</td>';
