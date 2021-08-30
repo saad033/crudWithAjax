@@ -5,7 +5,7 @@
                 <h2>Laravel 8 Ajax Crud</h2>
         </div>
         <div class="col-lg-1">
-            <a class="btn btn-success" href="#" data-toggle="modal" data-target="#addModal">Add</a>
+            <a class="btn btn-success" style="margin-top:30px" href="#" data-toggle="modal" data-target="#addModal">Add</a>
         </div>
     </div>
     @if ($message = Session::get('success'))
@@ -51,11 +51,28 @@
         <h4 class="modal-title">Add New Student</h4>
       </div>
 	  <div class="modal-body">
+				
+		<!-- <div class="alert alert-danger print-error-msg" style="display:none">
+		<ul></ul>
+		</div>
+        -->
+		<!-- <div class="col-lg-12">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif -->
 		<form id="addStudent" name="addStudent" action="" method="">
 			@csrf
 			<div class="form-group">
 				<label for="txtFirstName">First Name:</label>
 				<input type="text" class="form-control" id="txtFirstName" placeholder="Enter First Name" name="txtFirstName">
+				
 			</div>
 			<div class="form-group">
 				<label for="txtLastName">Last Name:</label>
@@ -65,13 +82,15 @@
 				<label for="txtAddress">Address:</label>
 				<textarea class="form-control" id="txtAddress" name="txtAddress" rows="10" placeholder="Enter Address"></textarea>
 			</div>
+			 <div class="modal-footer">
 			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
 		</form>
-	  </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+		
     </div>
+	  </div>
+      
   </div>
 </div>	
 <!-- Update Student Modal -->
@@ -101,12 +120,15 @@
 				<label for="txtAddress">Address:</label>
 				<textarea class="form-control" id="txtAddress" name="txtAddress" rows="10" placeholder="Enter Address"></textarea>
 			</div>
+			<div class="modal-footer">
 			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
 		</form>
 	  </div>
-      <div class="modal-footer">
+      <!-- <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>	
@@ -147,7 +169,8 @@
 		  });
 		}
 	});
-  
+	
+
  
     //When click edit student
     $('body').on('click', '.btnEdit', function () {
@@ -195,13 +218,23 @@
 	});		
 		
    //delete student
-	$('body').on('click', '.btnDelete', function () {
-      var student_id = $(this).attr('data-id');
-      $.get('student/' + student_id +'/delete', function (data) {
-          $('#studentTable tbody #'+ student_id).remove();
-      })
-   });	
-	
-});	  
+			$('body').on('click', '.btnDelete', function () {
+			var student_id = $(this).attr('data-id');
+			var proceed = confirm("Do You really want to Delete record?");
+				if(proceed ==1)
+				{
+					$.get('student/' + student_id +'/delete', function (data) {
+				$('#studentTable tbody #'+ student_id).remove();
+			})
+				}
+
+				else{
+					alert("You aborted the operation.");
+				}
+			
+		});	
+			
+		});
+
 </script>
 @endsection

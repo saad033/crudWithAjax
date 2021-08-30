@@ -38,6 +38,12 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         //
+        // $first_name = if isset($request->post('txtFirstName')? $request->post('txtFirstName')) '',
+            $request->validate([
+                'txtFirstName'=>'required|min:3',
+                'txtLastName'=>'required',
+                'txtAddress'=>'required'
+            ]);
         $student = new Student([
             'first_name' => $request->post('txtFirstName'),
             'last_name'=> $request->post('txtLastName'),
